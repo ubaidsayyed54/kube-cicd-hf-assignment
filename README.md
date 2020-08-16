@@ -24,7 +24,7 @@ gcloud container clusters create hf-cicd-demo --num-nodes 30 \
 gcloud container clusters get-credentials hf-cicd-demo --zone us-central1-a --project hf-cicd-project
 ```
 
-### Configuring the cloudbuild 
+### Configuring the cloudbuild with the github
 
 ![cloudbuild-1](https://github.com/ubaidsayyed54/kube-cicd-hf-assignment/blob/master/images/install-cloudbuild.png)
 
@@ -37,6 +37,5 @@ gcloud container clusters get-credentials hf-cicd-demo --zone us-central1-a --pr
 
 
 
-### SSL termination with Ambea
 
 
