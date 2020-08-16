@@ -3,28 +3,24 @@ There are three ways in which we can autoscale our clusters below are the descri
 Horizontal scaling by increasing and decreasing the number of Pod replicas, vertical scaling by changing resource requirements for Pods, 
 and scaling the cluster itself by changing the number of cluster nodes. These actions can be performed manually(imperative) as well as (decalarative)
 
-we explore how Kubernetes can perform scaling based on load automatically.
-Identifying accurately how many resources a container will require, and how many replicas a service will need at a given time to meet SLA takes time and effort. Luckily, Kubernetes makes it easy to alter the resources of a container, the desired replicas for a service, or the number of nodes in the cluster. 
-Such changes can happen either manually, or given specific rules, can be performed in a fully automated manner.
+
+Identifying accurately how many resources a container will require, and how many replicas a service will need at a given time to meet SLA takes time and effort. Luckily, Kubernetes makes it easy to alter the resources of a container, the desired replicas for a service, or the number of nodes in the cluster. Such changes can happen either manually, or given specific rules, can be performed in a fully automated manner.
 We can not only can preserve a fixed Pod and cluster setup, but also can monitor external metrics and capacity-related events, analyze the current state, and scale itself for the desired performance. 
  
-There are two main approaches to scaling any application: horizontal and vertical. Horizontally equates to creating more replicas of a Pod. Vertically scaling implies giving more resources to running containers. 
-creating an application configuration for autoscaling on a shared cloud platform without affecting other services and the cluster itself requires significant trial and error but below is the overview of all three strategies.
+There are two main approaches to scaling any application: horizontal and vertical. Horizontally equates to creating more replicas of a Pod. Vertically scaling implies giving more resources to running containers. Creating an application configuration for autoscaling on a shared cloud platform without affecting other services and the cluster itself requires significant trial and error but below is the overview of all three strategies.
 
 
 ### Manual Horizontal Scaling 
 The manual scaling approach is based on a human intervention issuing commands to Kubernetes can be used in the absence of autoscaling
 An advantage of the manual approach is that it also allows proactivity rather than reactive-only changes: knowing the seasonality and the expected application load, 
-We can scale it out in advance rather then waiting for actual load to be visualize on the graph.
+We can also scale it out in advance rather then waiting for actual load to be visualize on the graph.
 
 ### IMPERATIVE SCALING
 
 Scaling a Deployment’s replicas on the command line
 kubectl scale hf-nodejs-app --replicas=4
 
-A controller such as ReplicaSet is responsible for making sure a specific number of Pod instances are always up and running. 
-Thus, scaling a Pod is as trivially simple as changing the number of desired replicas. 
-Given a Deployment named honestfood, scaling it to four instances can be done in one command, as shown in Example 24-1.
+A controller such as ReplicaSet is responsible for making sure a specific number of Pod instances are always up and running. Scaling a Pod is as trivially simple as changing the number of desired replicas. Given a Deployment named honestfood, scaling it to four instances can be done in one command
 
 Scaling a Deployment’s replicas on the command line
 kubectl scale hf-nodejs-app --replicas=4
@@ -74,9 +70,9 @@ The custom metrics are served in an aggregated API Server under .metrics.k8s.io
 API path and are provided by different metrics adapters such as Prometheus, Datadog, Microsoft Azure, or Google Stackdriver.
 External metrics
 This category is for metrics that describe resources that are not a part of the Kubernetes cluster. For example, you may have a Pod that consumes messages from a cloud-based queueing service. 
-Very often in such a scenario, you may want to scale the number of consumer Pods based on the queue depth.
-Probably one of the most critical decisions around autoscaling is which metrics to use. For an HPA to be useful, there must be a direct correlation between the metric value and the number of Pod replicas. 
-For example, if the chosen metric is of Queries-per-Second (such as HTTP requests per second) kind, increasing the number of Pods causes the average number of queries to go down as the queries are dispatched to more Pods.
+Very often in such a scenario, we may want to scale the number of consumer Pods based on the queue depth.
+For an HPA to be useful, there must be a direct correlation between the metric value and the number of Pod replicas. 
+The chosen metric is of Queries-per-Second (such as HTTP requests per second) kind, increasing the number of Pods causes the average number of queries to go down as the queries are dispatched to more Pods.
 
 ### Vertical Pod Autoscaling
 HPA is preferred over VPA as it doesnt hav big impact because all it is meant for stateless services.
@@ -84,8 +80,7 @@ VPA is used for stateful application and useful for tuning the resource of the c
 
 Vertical scaling also has these kinds of challenges in identifying the correct requests and limits for a container
 
-Update policy
-Controls how VPA applies changes. The Initial mode allows assigning resource requests only during Pod creation time but not later
+Update policy Controls how VPA applies changes. The Initial mode allows assigning resource requests only during Pod creation time
 updateMode: Off
 The value Off disables automatic changes to Pods
 
@@ -93,11 +88,10 @@ updateMode: Initial
 VPA definition can also have a resource policy that influences how VPA computes the recommended resources
 
 updateMode: Auto
-
-HPA is using resource metrics such as CPU and memory and the VPA is also influencing the same values, you may end up with horizontally scaled Pods that are also vertically scaled (hence double scaling).
+VPA  activates its updated component and evicts running Pods matching its label selector. After the eviction, the Pods get recreated by the VPA admission plugin component
 
 ### Cluster autoscaling.
-These option is usually provided by cloud providers in order to scale our nodes up and down.
+These option is usually provided by cloud providers in order to scale kubernetes cluster nodes up and down.
 Creating a cluster with autoscaling
 ```
 gcloud container clusters create cluster-name --num-nodes 30 \
