@@ -19,9 +19,10 @@ docker push ubaidsayyed/nodejs-app:1.0.0
 #  cluster with autoscaling-on 
 gcloud container clusters create hf-cicd-demo --num-nodes 1 --zone us-central1-a --enable-autoscaling --min-nodes "1" --max-nodes "3"
 
-
+# connecting to the GKE cluster
+gcloud container clusters get-credentials hf-cicd-demo --zone us-central1-a --project hf-cicd-project
 ```
 
-#  
+### Configuring the cloudbuild 
 
 
