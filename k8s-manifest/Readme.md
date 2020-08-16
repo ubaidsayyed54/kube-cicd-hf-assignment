@@ -40,6 +40,9 @@ kubectl apply -f https://raw.githubusercontent.com/GoogleCloudPlatform/k8s-stack
 
 #### Step 3: Deploy an application with metrics
 In this case we are using custom metrics which will scrape the qps count to cloud monitor in our node.js application 
+```
+kubectl apply -f hpa-deployment.yaml
+```
 
 
 #### Step 4: Generate the load for testing the autoscaling action
