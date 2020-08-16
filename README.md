@@ -17,7 +17,9 @@ docker push ubaidsayyed/nodejs-app:1.0.0
 ### Creating a GKE cluster with auto-scaling nodepool
 ```
 #  cluster with autoscaling-on 
-gcloud container clusters create demo-cloudbuild --num-nodes 1 --zone us-central1-a --enable-autoscaling --min-nodes "1" --max-nodes "3"
+gcloud container clusters create hf-cicd-demo --num-nodes 1 --zone us-central1-a --enable-autoscaling --min-nodes "1" --max-nodes "3"
+
+
 ```
 
 #  

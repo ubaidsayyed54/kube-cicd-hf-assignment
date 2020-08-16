@@ -20,4 +20,4 @@ steps:
   id: Push
   args:
   - 'push'
-  - 'gcr.io/$PROJECT_ID/demo-cicd:$SHORT_SHA'
+  - 'gcr.io/$PROJECT_ID/hf-cicd:$SHORT_SHA'
