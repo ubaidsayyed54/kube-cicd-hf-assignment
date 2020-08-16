@@ -17,7 +17,8 @@ docker push ubaidsayyed/nodejs-app:1.0.0
 ### Creating a GKE cluster with auto-scaling nodepool
 ```
 #  cluster with autoscaling-on 
-gcloud container clusters create hf-cicd-demo --num-nodes 1 --zone us-central1-a --enable-autoscaling --min-nodes "1" --max-nodes "3"
+gcloud container clusters create hf-cicd-demo --num-nodes 30 \
+    --enable-autoscaling --min-nodes 15 --max-nodes 50 [--zone compute-zone]
 
 # connecting to the GKE cluster
 gcloud container clusters get-credentials hf-cicd-demo --zone us-central1-a --project hf-cicd-project
@@ -35,5 +36,7 @@ gcloud container clusters get-credentials hf-cicd-demo --zone us-central1-a --pr
 ![cloudbuild-4](https://github.com/ubaidsayyed54/kube-cicd-hf-assignment/blob/master/images/cloud-build-2.png)
 
 
+
+### SSL termination with Ambea
 
 
