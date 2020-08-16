@@ -25,4 +25,15 @@ gcloud container clusters get-credentials hf-cicd-demo --zone us-central1-a --pr
 
 ### Configuring the cloudbuild 
 
+![cloudbuild-1](https://github.com/ubaidsayyed54/kube-cicd-hf-assignment/blob/master/images/install-cloudbuild.png)
+
+
+![cloudbuild-2](https://github.com/ubaidsayyed54/kube-cicd-hf-assignment/blob/master/images/cloudbuild-trigger1.png)
+
+![cloudbuild-3](https://github.com/ubaidsayyed54/kube-cicd-hf-assignment/blob/master/images/cloudbuild-3.png)
+
+![cloudbuild-4](https://github.com/ubaidsayyed54/kube-cicd-hf-assignment/blob/master/images/cloud-build-2.png)
+
+
+
 
