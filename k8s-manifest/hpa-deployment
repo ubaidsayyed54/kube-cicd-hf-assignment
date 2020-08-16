@@ -1,0 +1,43 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    run: hf-nodejs-app
+  name:  hf-nodejs-app
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: hf-nodejs-app
+  template:
+    metadata:
+      labels:
+        run: hf-nodejs-app
+    spec:
+      containers:
+      - command: ["./qps_exporter"]
+        args:
+        - --use-new-resource-model=true
+        - --use-old-resource-model=false
+        - --metric-name=custom-metric
+        - --metric-value=40
+        - --pod-name=$(POD_NAME)
+        - --namespace=$(NAMESPACE)
+        image: ubaidsayyed/nodejs-app:1.0.0
+        name: 
+        resources:
+          requests:
+            cpu: 100m
+        env:
+        - name: hf-nodejs-app
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.name
+        - name: hf-nodejs-apps
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+			 
