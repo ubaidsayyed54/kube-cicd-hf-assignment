@@ -46,4 +46,6 @@ kubectl apply -f hpa-deployment.yaml
 
 
 #### Step 4: Generate the load for testing the autoscaling action
+```
 kubectl run -it --rm --restart=Never loadgenerator --image=busybox -- sh -c "while true; do wget -O - -q http://<load-balancer-ip-for-nodejs-app>/;done"
+```
