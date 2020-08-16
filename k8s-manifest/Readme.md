@@ -1,4 +1,4 @@
-### Scalable k8s service
+### Scalable service with k8s HPA
 
 We can scale kuberetes cluster using a custom metrics adapter and using google cloudmonitor. We will deploy custom metrics adapter and then scrape from within
 our application code number of http request to a custom metrics and when threshold breaches pods autoscales.
