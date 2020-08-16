@@ -1,0 +1,27 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: hf-nodejs-app
+  name: hf-nodejs-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: hf-nodejs-app
+  template:
+    metadata:
+      labels:
+        run: hf-nodejs-app
+    spec:
+      containers:
+      - image: ubaidsayyed/nodejs-app:1.0.0
+        name: hf-nodejs-app
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        resources:
+          limits:
+            cpu: 100m
+            memory: 100Mi
