@@ -12,12 +12,12 @@ There are two main approaches to scaling any application: horizontal and vertica
 creating an application configuration for autoscaling on a shared cloud platform without affecting other services and the cluster itself requires significant trial and error but below is the overview of all three strategies.
 
 
-Manual Horizontal Scaling
+### Manual Horizontal Scaling 
 The manual scaling approach is based on a human intervention issuing commands to Kubernetes can be used in the absence of autoscaling
 An advantage of the manual approach is that it also allows proactivity rather than reactive-only changes: knowing the seasonality and the expected application load, 
 We can scale it out in advance rather then waiting for actual load to be visualize on the graph.
 
-IMPERATIVE SACLING
+### IMPERATIVE SCALING
 
 Scaling a Deployment’s replicas on the command line
 kubectl scale hf-nodejs-app --replicas=4
@@ -29,7 +29,7 @@ Given a Deployment named honestfood, scaling it to four instances can be done in
 Scaling a Deployment’s replicas on the command line
 kubectl scale hf-nodejs-app --replicas=4
 
-DECLARATIVE SCALING
+### DECLARATIVE SCALING
 scale command is simple and good for quick reactions to e, but it does not preserve this configuration outside the cluster. 
 To avoid configuration drift and to introduce operational processes for backporting changes, 
 it is a better practice to change the desired number of replicas declaratively in the ReplicaSet or some other 
@@ -44,9 +44,7 @@ We can only scale resources managing multiple Pods such as ReplicaSets, Deployme
 Manual scaling styles (imperative and declarative) involves human internvention to observe or anticipate a change in the application load, make a decision on how much to scale, and apply it to the cluster. 
 but they are not suitable for dynamic workload patterns that change often and require continuous adaptation.
 
-Horontal Pod Autoscaling
-
-
+### Horontal Pod Autoscaling
 
 An HPA for the honestfood Deployment can be created with the command in Example 24-3. For the HPA to have any effect, 
 it is important that the Deployment declare a .spec.resources.requests limit for the CPU as described. 
@@ -60,7 +58,7 @@ This definition instructs the HPA controller to keep between one and five Pod in
 Deployments create new ReplicaSets during updates but without copying over any HPA definitions. If you apply an HPA to a ReplicaSet managed by a Deployment, it is not copied over to new ReplicaSets and will be lost.
 A better technique is to apply the HPA to the higher-level Deployment abstraction, which preserves and applies the HPA to the new ReplicaSet versions.
 
-working of HPA
+### Working of HPA
 1.Retrieves metrics about the Pods that are subject to scaling according to the HPA definition. 
 2.Calculates the required number of replicas based on the current metric value and targeting the desired metric value. 
 Here is a simplified version of the formula:
@@ -68,7 +66,7 @@ Here is a simplified version of the formula:
 The replicas field of the autoscaled resource will be updated with this calculated number and other controllers do their bit of work in achieving and keeping the new desired state
 
 
-Standard metrics
+### Standard metrics
 with .spec.metrics.resource[:].type equals to Resource and represent resource usage metrics such as CPU and memory and can be specificy as percentage
 Custom metrics
 .spec.metrics.resource[&#x2a;].type equals to Object or Pod require a more advanced cluster monitoring setup, which can vary from cluster to cluster
@@ -80,7 +78,7 @@ Very often in such a scenario, you may want to scale the number of consumer Pods
 Probably one of the most critical decisions around autoscaling is which metrics to use. For an HPA to be useful, there must be a direct correlation between the metric value and the number of Pod replicas. 
 For example, if the chosen metric is of Queries-per-Second (such as HTTP requests per second) kind, increasing the number of Pods causes the average number of queries to go down as the queries are dispatched to more Pods.
 
-Vertical Pod Autoscaling
+### Vertical Pod Autoscaling
 HPA is preferred over VPA as it doesnt hav big impact because all it is meant for stateless services.
 VPA is used for stateful application and useful for tuning the resource of the container based on load patterns
 
@@ -98,23 +96,28 @@ updateMode: Auto
 
 HPA is using resource metrics such as CPU and memory and the VPA is also influencing the same values, you may end up with horizontally scaled Pods that are also vertically scaled (hence double scaling).
 
-Cluster autoscaling.
+### Cluster autoscaling.
 These option is usually provided by cloud providers in order to scale our nodes up and down.
-
 Creating a cluster with autoscaling
-
+```
 gcloud container clusters create cluster-name --num-nodes 30 \
     --enable-autoscaling --min-nodes 15 --max-nodes 50 [--zone compute-zone]
-	
-Adding a node pool with autoscaling
+```
 
+Adding a node pool with autoscaling
+```
 gcloud container node-pools create pool-name --cluster cluster-name \
     --enable-autoscaling --min-nodes 1 --max-nodes 5 [--zone compute-zone]
+```
+
 Enabling autoscaling for an existing node pool
+```
 gcloud container clusters update cluster-name --enable-autoscaling \
     --min-nodes 1 --max-nodes 10 --zone compute-zone --node-pool default-pool
+```
 
 Disabling autoscaling for an existing node pool
-
+```
 gcloud container clusters update cluster-name --no-enable-autoscaling \
     --node-pool pool-name [--zone compute-zone --project project-id]
+```
